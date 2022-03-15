@@ -1,11 +1,12 @@
 FROM alpine:latest
 
-ARG DEFAULT_PORT 3005
-ENV PORT $DEFAULT_PORT
+LABEL maintainer="Thomas"
+ENV URL="ecosia.org"
 
-RUN apk add nodejs npm
-RUN npm i -g serve
-EXPOSE $PORT
-RUN echo "bonjour je suis le port $PORT" > index.html
-CMD serve -p $PORT
+WORKDIR /app
 
+RUN adduser -S thomas
+RUN chown -R thomas /app
+USER thomas
+
+CMD wget $URL && ls | xargs cat
