@@ -1,7 +1,12 @@
 FROM alpine:latest
 
-RUN apk add nodejs
+RUN apk add nodejs npm
 
-COPY coucou.js .
+RUN npm i -g serve
 
-CMD ["node", "coucou.js"]
+# exposer le port de serve
+EXPOSE 3000
+
+COPY index.html .
+
+CMD ["serve"]
