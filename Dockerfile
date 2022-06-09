@@ -1,12 +1,8 @@
-FROM alpine:latest
+FROM nginx
 
 LABEL maintainer="Thomas"
-ENV URL="ecosia.org"
 
-WORKDIR /app
+COPY nginx.conf /etc/nginx/nginx.conf
+VOLUME /var/log/nginx
 
-RUN adduser -S thomas
-RUN chown -R thomas /app
-USER thomas
-
-CMD wget $URL && ls | xargs cat
+EXPOSE 80
