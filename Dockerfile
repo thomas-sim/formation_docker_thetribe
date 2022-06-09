@@ -2,7 +2,9 @@ FROM nginx
 
 LABEL maintainer="Thomas"
 
-COPY nginx.conf /etc/nginx/nginx.conf
+RUN rm -rf /usr/share/nginx/html/*
+COPY index.html /usr/share/nginx/html
+
 VOLUME /var/log/nginx
 
 EXPOSE 80

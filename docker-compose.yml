@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  nginx:
+    build: .
+    volumes:
+      - nginx-log:/var/log/nginx
+    ports:
+      - 9002:90
+    networks:
+      - nginx-network
+  ping:
+    image: alpine:3.10.3
+    command: curl nginx:80
+    networks:
+      - nginx-network
+
+volumes:
+  nginx-log: {}
+
+networks:
+  nginx-network: {}
