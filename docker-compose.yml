@@ -1,21 +1,23 @@
-version: '3.9'
-services:
-  nginx:
-    build: .
-    volumes:
-      - nginx-log:/var/log/nginx
-    ports:
-      - 9002:90
-    networks:
-      - nginx-network
-  ping:
-    image: alpine:3.10.3
-    command: curl nginx:80
-    networks:
-      - nginx-network
+version: '3.7'
+services: 
+  mysql_db_container:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - ./mysql.env
+    ports: 
+      - 3307:3307
+    volumes: 
+      - mysql_db_data_container:/var/lib/mysql
 
-volumes:
-  nginx-log: {}
+  adminer_container:
+    image: adminer:latest
+    environment: 
+      ADMINER_DEFAULT_SERVER: mysql_db_container
+      ADMINER_DESIGN: galkaev
+    ports: 
+          - 8080:8080
 
-networks:
-  nginx-network: {}
+
+volumes: 
+  mysql_db_data_container: {}
